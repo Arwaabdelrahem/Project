@@ -45,7 +45,10 @@ router.post("/login", async (req, res, next) => {
     { _id: user._id, email: user.email },
     config.get("jwtprivateKey")
   );
-  res.status(200).send(user);
+  res.status(200).json({
+    user: user,
+    token: token,
+  });
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -59,13 +62,10 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/:id", auth, async (req, res, next) => {
-  let user = await User.findByIdAndUpdate(req.params.id, {
-    $set: {
-      email: req.body.email,
-      password: req.body.password,
-    },
-  });
+  let user = await User.findById(req.params.id);
 
+  user.email = req.body.email;
+  user.password = await bcrypt.hash(req.body.password, 10);
   user = await user.save();
   res.status(200).send(user);
 });

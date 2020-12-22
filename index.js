@@ -5,7 +5,6 @@ const products = require("./routes/products");
 const orders = require("./routes/orders");
 const users = require("./routes/users");
 const cors = require("cors");
-require("./startup/validation")();
 const { errorHandler, serverErrorHandler } = require("./middleware/error");
 const app = express();
 
