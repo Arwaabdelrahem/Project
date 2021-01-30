@@ -9,15 +9,12 @@ const { errorHandler, serverErrorHandler } = require("./middleware/error");
 const app = express();
 
 mongoose
-  .connect(
-    "mongodb+srv://Arwaabdelrahem:mongo@cluster0.xse5n.mongodb.net/MaxDB?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(process.env.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log("MongoDB connected");
   });

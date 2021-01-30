@@ -3,7 +3,6 @@ const router = express.Router();
 const { User, validate } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 const auth = require("../middleware/auth");
 
 router.get("/", async (req, res, next) => {
@@ -43,7 +42,7 @@ router.post("/login", async (req, res, next) => {
 
   const token = jwt.sign(
     { _id: user._id, email: user.email },
-    config.get("jwtprivateKey")
+    process.env.jwtprivateKey
   );
   res.status(200).json({
     user: user,
